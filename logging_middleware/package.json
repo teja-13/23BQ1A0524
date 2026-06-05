@@ -1,0 +1,21 @@
+{
+  "name": "logging-middleware",
+  "version": "1.0.0",
+  "description": "Express app with reusable logging middleware and logging service.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "logging",
+    "middleware",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.17.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2"
+  }
+}
