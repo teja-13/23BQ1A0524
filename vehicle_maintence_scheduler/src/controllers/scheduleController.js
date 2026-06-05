@@ -8,7 +8,7 @@ async function getSchedule(req, res) {
                 req.params.depotId,
                 req.accessToken
             );
-
+        
         res.status(200).json({
             success: true,
             data: result
