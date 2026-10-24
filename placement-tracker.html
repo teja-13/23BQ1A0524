@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Placement Tracker</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2d;--panel2:#172239;--line:#27344d;--text:#e9eef9;--muted:#98a8c3;--accent:#8b9cff;--green:#49d6a1;--yellow:#f3c969;--red:#ff8190}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top left,#172447 0,transparent 45%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:9px 13px;background:var(--panel2);color:var(--text)}button:hover{border-color:var(--accent)}button.primary{background:var(--accent);color:#10152b;border-color:var(--accent);font-weight:700}button.danger{color:var(--red)}button.small{padding:5px 8px;font-size:12px}
+header{max-width:1400px;margin:auto;padding:25px 24px 12px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}.brand{display:flex;gap:12px;align-items:center}.logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#26365e;color:#cbd3ff;font-size:21px;font-weight:800}.brand h1{font-size:21px;margin:0}.brand p{margin:2px 0 0;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap}
+main{max-width:1400px;margin:auto;padding:12px 24px 42px}.notice{color:var(--muted);font-size:12px;margin:0 0 16px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}.stat,.panel{background:linear-gradient(145deg,rgba(23,34,57,.96),rgba(17,25,43,.98));border:1px solid var(--line);border-radius:16px}.stat{padding:17px}.stat .label{color:var(--muted);font-size:12px}.stat .num{font-size:28px;font-weight:750;margin-top:5px}.stat .sub{color:var(--muted);font-size:11px;margin-top:3px}.green{color:var(--green)}.yellow{color:var(--yellow)}.red{color:var(--red)}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.85fr);gap:16px;align-items:start}.panel{padding:17px;margin-bottom:16px}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}.panel h2{font-size:15px;margin:0}.muted{color:var(--muted)}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+input,select,textarea{background:#0c1425;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;min-width:0;width:100%;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent)}.filters input{flex:1;min-width:160px}.filters select{width:auto;min-width:130px}
+.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:760px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}td{font-size:13px}tbody tr:hover{background:#ffffff05}.company{font-weight:700}.role{color:var(--muted);font-size:12px}.pill{display:inline-flex;border-radius:30px;padding:4px 8px;font-size:11px;font-weight:700;white-space:nowrap;background:#25304a;color:#c8d3eb}.pill.Applied{color:#cbd5ff;background:#28345e}.pill.OA,.pill.Interview{color:var(--yellow);background:#463b26}.pill.Offer,.pill.Selected{color:var(--green);background:#173e38}.pill.Rejected{color:var(--red);background:#472833}.pill.Upcoming{color:#a5c8ff;background:#233b58}.empty{text-align:center;color:var(--muted);padding:35px 10px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:12px;color:var(--muted)}.field.full{grid-column:1/-1}.field textarea{resize:vertical;min-height:70px}.formactions{display:flex;gap:8px;justify-content:flex-end;grid-column:1/-1;margin-top:3px}
+.progressrow{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin:13px 0 6px}.track{height:7px;background:#27334b;border-radius:20px;overflow:hidden}.fill{height:100%;border-radius:20px;background:var(--accent)}.mini-list{display:grid;gap:10px}.mini-item{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px;background:#0c1425;border:1px solid var(--line);border-radius:10px}.mini-item strong{display:block;font-size:12px}.mini-item small{color:var(--muted)}.chart{height:150px;display:flex;gap:9px;align-items:end;padding:12px 4px 0}.barcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:7px;height:100%;min-width:0}.bar{width:min(35px,75%);min-height:2px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#a1aaff,#6477e8)}.barlabel{font-size:10px;color:var(--muted);text-align:center;overflow:hidden;text-overflow:ellipsis;max-width:100%}.barval{font-size:10px;color:#dfe4ff}
+footer{max-width:1400px;margin:auto;padding:0 24px 25px;color:var(--muted);font-size:11px}
+dialog{width:min(650px,calc(100% - 24px));max-height:90vh;overflow:auto;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:20px}dialog::backdrop{background:#02040bc9}.dialoghead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.dialoghead h2{margin:0;font-size:18px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){header,main{padding-left:14px;padding-right:14px}.stats{gap:8px}.stat{padding:12px}.stat .num{font-size:24px}.formgrid{grid-template-columns:1fr}.field.full,.formactions{grid-column:1}.actions button{flex:1}.brand h1{font-size:18px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">P</div><div><h1>Placement Tracker</h1><p>One place for every application, test and offer.</p></div></div>
+  <div class="actions"><button id="exportBtn">Export backup</button><button id="importBtn">Import backup</button><button class="primary" id="addTop">+ Add application</button><input id="importFile" type="file" accept="application/json" hidden></div>
+</header>
+<main>
+  <p class="notice">Saved automatically in this browser on this device. No account or server required. Export a backup regularly.</p>
+  <section class="stats">
+    <div class="stat"><div class="label">Total applications</div><div class="num" id="total">0</div><div class="sub">Across all tracked companies</div></div>
+    <div class="stat"><div class="label">Active processes</div><div class="num" id="active">0</div><div class="sub">Applied, OA or interview</div></div>
+    <div class="stat"><div class="label">Offers / selected</div><div class="num green" id="offers">0</div><div class="sub">Your wins so far</div></div>
+    <div class="stat"><div class="label">Average package</div><div class="num" id="avg">—</div><div class="sub">For offers with a package entered</div></div>
+  </section>
+  <div class="layout">
+    <div>
+      <section class="panel">
+        <div class="panelhead"><h2>Applications</h2><span class="muted" id="resultCount">0 records</span></div>
+        <div class="filters"><input id="search" placeholder="Search company, role, notes…"><select id="statusFilter"><option value="">All statuses</option><option>Upcoming</option><option>Applied</option><option>OA</option><option>Interview</option><option>Offer</option><option>Selected</option><option>Rejected</option><option>Withdrawn</option></select><select id="sort"><option value="updated">Recently updated</option><option value="deadline">Deadline soonest</option><option value="company">Company A–Z</option></select></div>
+        <div class="tablewrap"><table><thead><tr><th>Company / role</th><th>Status</th><th>Applied</th><th>Package</th><th>Next date</th><th>Actions</th></tr></thead><tbody id="applications"></tbody></table></div>
+        <div class="empty" id="empty">No applications yet. Add your first one to get started.</div>
+      </section>
+      <section class="panel"><div class="panelhead"><h2>Application pipeline</h2><span class="muted">Current status</span></div><div id="pipeline"></div></section>
+    </div>
+    <div>
+      <section class="panel"><div class="panelhead"><h2 id="formTitle">Add an application</h2></div>
+        <form id="appForm" class="formgrid">
+          <input type="hidden" id="editId">
+          <div class="field"><label for="company">Company *</label><input id="company" required placeholder="e.g. Zoho"></div>
+          <div class="field"><label for="role">Role / position *</label><input id="role" required placeholder="e.g. Java Developer Intern"></div>
+          <div class="field"><label for="status">Status</label><select id="status"><option>Applied</option><option>Upcoming</option><option>OA</option><option>Interview</option><option>Offer</option><option>Selected</option><option>Rejected</option><option>Withdrawn</option></select></div>
+          <div class="field"><label for="type">Job type</label><select id="type"><option>Full-time</option><option>Internship</option><option>Internship + PPO</option><option>Contract</option><option>Other</option></select></div>
+          <div class="field"><label for="appliedDate">Applied / drive date</label><input id="appliedDate" type="date"></div>
+          <div class="field"><label for="nextDate">Next round / deadline</label><input id="nextDate" type="date"></div>
+          <div class="field"><label for="package">Package (LPA, if known)</label><input id="package" type="number" min="0" step="0.01" placeholder="e.g. 6.5"></div>
+          <div class="field"><label for="location">Location / work mode</label><input id="location" placeholder="Remote, Hyderabad…"></div>
+          <div class="field full"><label for="link">Job / application link</label><input id="link" type="url" placeholder="https://…"></div>
+          <div class="field full"><label for="notes">Notes / rounds / contact</label><textarea id="notes" placeholder="OA platform, recruiter contact, questions asked, follow-up…"></textarea></div>
+          <div class="formactions"><button type="button" id="resetForm">Clear</button><button class="primary" type="submit" id="saveBtn">Save application</button></div>
+        </form>
+      </section>
+      <section class="panel"><div class="panelhead"><h2>Upcoming dates</h2><span class="muted">Next 30 days</span></div><div id="upcoming" class="mini-list"><div class="muted">No upcoming dates.</div></div></section>
+      <section class="panel"><div class="panelhead"><h2>Data & privacy</h2></div><p class="muted" style="font-size:12px;margin-top:0">Your entries stay in this browser's local storage. They are not synced to another browser or device.</p><button id="clearAll" class="danger">Delete all data</button></section>
+    </div>
+  </div>
+</main>
+<footer>Placement Tracker · Single-file local app · Use Export backup before clearing browser data or switching devices.</footer>
+<dialog id="confirmDialog"><div class="dialoghead"><h2>Delete all placement data?</h2><button id="closeDialog">Close</button></div><p>This permanently clears every saved application from this browser. Export a backup first if you may need it later.</p><div class="actions" style="justify-content:flex-end"><button id="cancelDelete">Cancel</button><button class="danger" id="confirmDelete">Delete everything</button></div></dialog>
+<script>
+(() => {
+  const KEY = "placementTracker.singleFile.v1";
+  const statuses = ["Upcoming","Applied","OA","Interview","Offer","Selected","Rejected","Withdrawn"];
+  let records = [];
+  try { records = JSON.parse(localStorage.getItem(KEY) || "[]"); if (!Array.isArray(records)) records = []; } catch { records = []; }
+  const $ = id => document.getElementById(id);
+  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fmtDate = value => value ? new Date(value + "T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}) : "—";
+  const money = value => value !== "" && value != null && Number.isFinite(Number(value)) ? `${Number(value).toLocaleString(undefined,{maximumFractionDigits:2})} LPA` : "—";
+  function persist(){ localStorage.setItem(KEY, JSON.stringify(records)); render(); }
+  function resetForm(){ $("appForm").reset(); $("editId").value=""; $("formTitle").textContent="Add an application"; $("saveBtn").textContent="Save application"; }
+  function render(){
+    $("total").textContent=records.length;
+    $("active").textContent=records.filter(r=>["Applied","OA","Interview","Upcoming"].includes(r.status)).length;
+    const wins=records.filter(r=>["Offer","Selected"].includes(r.status));
+    $("offers").textContent=wins.length;
+    const packages=wins.map(r=>Number(r.package)).filter(n=>Number.isFinite(n)&&n>0);
+    $("avg").textContent=packages.length ? (packages.reduce((a,b)=>a+b,0)/packages.length).toLocaleString(undefined,{maximumFractionDigits:2})+" LPA" : "—";
+    const q=$("search").value.trim().toLowerCase(), sf=$("statusFilter").value, sort=$("sort").value;
+    let shown=records.filter(r=>(!sf||r.status===sf)&&[r.company,r.role,r.notes,r.location,r.type].some(v=>String(v||"").toLowerCase().includes(q)));
+    shown.sort((a,b)=>sort==="company" ? a.company.localeCompare(b.company) : sort==="deadline" ? ((a.nextDate||"9999").localeCompare(b.nextDate||"9999")) : (b.updated||0)-(a.updated||0));
+    $("resultCount").textContent=`${shown.length} record${shown.length===1?"":"s"}`;
+    $("applications").innerHTML=shown.map(r=>`<tr><td><div class="company">${escapeHtml(r.company)}</div><div class="role">${escapeHtml(r.role)} · ${escapeHtml(r.type||"")}</div>${r.link?`<div class="role"><a style="color:#aab6ff" href="${escapeHtml(r.link)}" target="_blank" rel="noopener noreferrer">Open job link</a></div>`:""}</td><td><span class="pill ${escapeHtml(r.status)}">${escapeHtml(r.status)}</span></td><td>${fmtDate(r.appliedDate)}</td><td>${money(r.package)}</td><td>${fmtDate(r.nextDate)}</td><td><div style="display:flex;gap:5px"><button class="small" data-edit="${r.id}">Edit</button><button class="small danger" data-delete="${r.id}">Delete</button></div></td></tr>`).join("");
+    $("empty").style.display=shown.length?"none":"block";
+    $("pipeline").innerHTML=statuses.map(s=>{const n=records.filter(r=>r.status===s).length,p=records.length?n/records.length*100:0;return `<div class="progressrow"><span>${s}</span><strong>${n}</strong></div><div class="track"><div class="fill" style="width:${p}%"></div></div>`}).join("");
+    const now=new Date();now.setHours(0,0,0,0);const limit=new Date(now);limit.setDate(limit.getDate()+30);
+    const future=records.filter(r=>r.nextDate&&new Date(r.nextDate+"T00:00:00")>=now&&new Date(r.nextDate+"T00:00:00")<=limit).sort((a,b)=>a.nextDate.localeCompare(b.nextDate));
+    $("upcoming").innerHTML=future.length?future.map(r=>`<div class="mini-item"><div><strong>${escapeHtml(r.company)} — ${escapeHtml(r.role)}</strong><small>${escapeHtml(r.status)}</small></div><span class="pill Upcoming">${fmtDate(r.nextDate)}</span></div>`).join(""):'<div class="muted">No upcoming dates in the next 30 days.</div>';
+  }
+  $("appForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    const id=$("editId").value;
+    const data={company:$("company").value.trim(),role:$("role").value.trim(),status:$("status").value,type:$("type").value,appliedDate:$("appliedDate").value,nextDate:$("nextDate").value,package:$("package").value,location:$("location").value.trim(),link:$("link").value.trim(),notes:$("notes").value.trim(),updated:Date.now()};
+    if(!data.company||!data.role)return;
+    if(id){records=records.map(r=>r.id===id?{...r,...data}:r)}else{records.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random(),...data})}
+    persist();resetForm();
+  });
+  $("applications").addEventListener("click",e=>{
+    const edit=e.target.closest("[data-edit]")?.dataset.edit, del=e.target.closest("[data-delete]")?.dataset.delete;
+    if(edit){const r=records.find(x=>x.id===edit);if(!r)return;$("editId").value=r.id;for(const k of ["company","role","status","type","appliedDate","nextDate","package","location","link","notes"])$(k).value=r[k]??"";$("formTitle").textContent="Edit application";$("saveBtn").textContent="Update application";$("company").focus();window.scrollTo({top:$("appForm").getBoundingClientRect().top+window.scrollY-20,behavior:"smooth"});}
+    if(del&&confirm("Delete this application?")){records=records.filter(r=>r.id!==del);persist();if($("editId").value===del)resetForm();}
+  });
+  $("resetForm").addEventListener("click",resetForm);
+  $("addTop").addEventListener("click",()=>{$("company").focus();$("appForm").scrollIntoView({behavior:"smooth",block:"center"})});
+  ["search","statusFilter","sort"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+  $("exportBtn").addEventListener("click",()=>{const blob=new Blob([JSON.stringify({app:"Placement Tracker",version:1,exportedAt:new Date().toISOString(),records},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="placement-tracker-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(url);});
+  $("importBtn").addEventListener("click",()=>$("importFile").click());
+  $("importFile").addEventListener("change",async e=>{const file=e.target.files[0];if(!file)return;try{const obj=JSON.parse(await file.text());const incoming=Array.isArray(obj)?obj:obj.records;if(!Array.isArray(incoming))throw Error("Invalid backup");if(!confirm(`Import ${incoming.length} records? This replaces the current saved data.`))return;records=incoming.filter(r=>r&&r.company&&r.role).map((r,i)=>({...r,id:String(r.id||Date.now()+i),status:statuses.includes(r.status)?r.status:"Applied",updated:Number(r.updated)||Date.now()}));persist();resetForm();alert("Backup imported.");}catch{alert("Could not import this file. Please select a valid Placement Tracker JSON backup.");}e.target.value="";});
+  $("clearAll").addEventListener("click",()=>$("confirmDialog").showModal());
+  $("closeDialog").addEventListener("click",()=>$("confirmDialog").close());
+  $("cancelDelete").addEventListener("click",()=>$("confirmDialog").close());
+  $("confirmDelete").addEventListener("click",()=>{records=[];persist();resetForm();$("confirmDialog").close();});
+  render();
+})();
+</script>
+</body>
+</html>
